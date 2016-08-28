@@ -1,0 +1,6 @@
+<h2>All bills</h2>
+<br>
+<ul ng-repeat="bill in bills track by $index">
+	<input type="checkbox" ng-model="bill.checked"> Bill ID: {{bill.bill_id}}, Biller: {{bill.biller_name}}, User:{{bill.user_name}}, Billing Date:{{bill.billing_date}}, Amount:{{bill.amount}}
+</ul>
+<a href='#/admin'><h4>back</h4></a>

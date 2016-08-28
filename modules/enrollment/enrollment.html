@@ -1,0 +1,29 @@
+<h3 ng-show="accounts.length>0">Enrolled accounts:</h3>
+<ul ng-repeat="account in accounts track by $index">
+    {{account.biller_name}} Account No. {{account.account_number}}
+</ul>
+
+<h3>New account:</h3>
+<ul>
+    <form name="form" ng-submit="enroll()" role="form">
+        <div class="form-group">
+            <label for="biller_name">Biller</label>
+            <br>
+            <select ng-model="biller_name" ng-options="biller for biller in billers"></select>
+        </div>
+
+        <div class="form-group">
+            <label for="account_number">{{biller_name}} account No.</label>
+
+            <input type="text" name="account_number" id="account_number" class="form-control" ng-model="account_number" required />
+            <span ng-show="form.account_number.$dirty && form.account_number.$error.required" class="help-block">Account no. is required</span>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-danger">Enroll</button>
+            <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+        </div>
+        <br>
+        <a href='#/home'><h4>back</h4></a>
+    </form>
+</ul>
