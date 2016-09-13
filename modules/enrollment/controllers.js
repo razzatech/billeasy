@@ -6,8 +6,8 @@ angular.module('Enrollment')
     ['$scope', '$rootScope', '$location', 'EnrollmentService',
     function ($scope, $rootScope, $location, EnrollmentService) {
         $scope.accounts = [];
-        $scope.billers = ["Meralco", "Maynilad"]; //this list should be fetched from server
-        $scope.biller_name=$scope.billers[0];
+        $scope.merchants;
+        $scope.selected_merchant;
 
         //fetch accounts
         $scope.fetch_accounts = function () {
@@ -21,7 +21,7 @@ angular.module('Enrollment')
     		});
         }
         $scope.fetch_accounts();
-
+		
         //renew token every 5 seconds
 		(function renew_token()
 		{
@@ -46,11 +46,24 @@ angular.module('Enrollment')
 				}
 			});
 		})();
-
+		
+		//fetch merchants for select box
+		(function refresh_merchants() {
+			EnrollmentService.fetch_merchants(function(response) {
+				if(response.success)
+				{
+					$scope.merchants=response.merchants;
+					$scope.selected_merchant=$scope.merchants[0];
+					console.log("Merchants updated.");
+				}
+			});
+		})();
+	
+		//enroll new account
 		$scope.enroll = function () {
             $scope.dataLoading = true;
 
-            EnrollmentService.enroll($scope.biller_name, $scope.account_number, function(response) {
+            EnrollmentService.enroll($scope.selected_merchant.merchant_code, $scope.account_number, $scope.custom_name, function(response) {
                 if(response.success) {
                     $scope.dataLoading = false;
 					alert("Account successfully enrolled!");
@@ -58,4 +71,11 @@ angular.module('Enrollment')
                 }
             });
         };
+		
+		//"Logout" link
+		$scope.logout = function() {
+			localStorage.clear();
+			console.log("User logged out.");
+			$location.path('/');			
+		}
     }]);

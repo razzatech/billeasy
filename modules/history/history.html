@@ -1,0 +1,28 @@
+<h2>Bill history</h2>
+<br>
+
+<table class="table" style="100%">
+	<thead>
+		<th>Biller</th>
+		<th>Bill no.</th>
+		<th>Bill date</th>
+		<th>Due date</th>
+		<th>Beginning balance</th>
+		<th>Amount due</th>
+		<th>Amount paid</th>
+		<th>Ending balance</th>
+	</thead>
+	
+	<tr ng-repeat="bill in bills">
+		<td>{{bill.merchant_name}}</td>
+		<td>{{bill.merchant_bill_number}}</td>
+		<td>{{bill.bill_date}}</td>
+		<td>{{bill.due_date}}</td>
+		<td>{{bill.beginning_balance}}</td>
+		<td>{{bill.amount_due}}</td>
+		<td>{{bill.amount_paid}}</td>
+		<td>{{bill.ending_balance}}</td>
+	</tr>
+</table>
+
+<a href='' ng-click="logout()"><h4>Logout</h4></a>

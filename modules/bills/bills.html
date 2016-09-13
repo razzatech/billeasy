@@ -1,0 +1,78 @@
+<h2>Bills</h2>
+<br>
+
+<table class="table" style="100%">
+	<thead>
+		<th>Billing account</th>
+		<th>Bill no.</th>
+		<th>Transaction</th>
+		<th>Bill date</th>
+		<th>Due date</th>
+		<th>Beginning balance</th>
+		<th>Amount due</th>
+		<th>Amount paid</th>
+		<th>Ending balance</th>
+	</thead>
+	
+	<tr ng-repeat="bill in bills">
+		<td>{{bill.account_id}}</td>
+		<td>{{bill.merchant_bill_number}}</td>
+		<td>{{bill.transaction_type}}</td>
+		<td>{{bill.bill_date}}</td>
+		<td>{{bill.due_date}}</td>
+		<td>{{bill.beginning_balance}}</td>
+		<td>{{bill.amount_due}}</td>
+		<td>{{bill.amount_paid}}</td>
+		<td>{{bill.ending_balance}}</td>
+	</tr>
+	<tr>	
+		<td>
+			<select ng-model="account" ng-options="account.account_id for account in accounts"></select>
+		</td>
+		
+		<td>
+			<input type="text" name="bill_number" id="bill_number" class="form-control" ng-model="bill_number" style="width:100px;" required />
+		</td>
+		
+		<td>
+			<select ng-model="transaction_type" ng-options="transaction_type.label for transaction_type in transaction_types"></select>
+		</td>
+		
+		<td>
+			<input type="date" ng-model="bill_date" name="bill_date" style="font-size:0.8em;">
+		</td>
+		
+		<td>
+			<input type="date" ng-model="due_date" name="due_date" style="font-size:0.8em;">
+		</td>
+		
+		<td>
+			<input type="text" name="beginning_balance" id="beginning_balance" class="form-control" ng-model="beginning_balance" required />
+		</td>
+		
+		<td>
+			<input type="text" name="amount_due" id="amount_due" class="form-control" ng-model="amount_due" required />
+		</td>
+		
+		<td>
+			<input type="text" name="amount_paid" id="amount_paid" class="form-control" ng-model="amount_paid" required />
+		</td>
+		
+		<td>
+			<input type="text" name="ending_balance" id="ending_balance" class="form-control" ng-model="ending_balance" required />
+		</td>
+
+		<td>
+			<a href="" ng-click="add_bill()">ADD</a>
+		</td>
+	</tr>
+</table>
+
+<a href='' ng-click="upload_csv()"><h4>Upload CSV file</h4></a>
+<form ng-show="show_uploader" action="http://billeasy.razzatech.com/api/upload_csv.py" method="POST" enctype="multipart/form-data">
+	<input name="file_1" type="file">
+	<br>
+	<input name="submit" type="submit">
+</form>
+<br>
+<a href='' ng-click="logout()"><h4>Logout</h4></a>

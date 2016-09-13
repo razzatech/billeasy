@@ -6,11 +6,11 @@ angular.module('Admin')
     ['$scope', '$location', 'AdminService',
     function ($scope, $location, AdminService) {
 		$scope.name=localStorage.getItem("name");
-        $scope.bills=[];
 
+		$scope.merchants=[];
+		
 	    //renew token every 5 seconds
-		(function renew_token()
-		{
+		(function renew_token() {
 			AdminService.renew_token(function(response) {
 				if(response.success) {
 					if($location.path().startsWith('/admin'))
@@ -30,51 +30,21 @@ angular.module('Admin')
 				}
 			});
 		})();
-
-        //refresh bills every 5 seconds
-		(function refresh_bills()
-		{
-			AdminService.fetch_bills(function(response) {
-				if(response.success && $location.path().startsWith('/admin'))
-				{
-					//remember which bills where checked
-					var checked=[];
-					for(var i=0;i<$scope.bills.length;i++)
-					{
-						if($scope.bills[i].checked) {
-							checked.push($scope.bills[i].bill_id);
-						}
-					}
-
-					$scope.bills=response.bills;
-
-					//check them again after updating
-					for(var i=0;i<checked.length;i++)
-					{
-						for(var j=0;j<$scope.bills.length;j++)
-						{
-							if(checked[i]==$scope.bills[j].bill_id) {
-								$scope.bills[j].checked = true;
-							}
-						}
-					}
-
-					console.log("Bills updated.");
-
-					setTimeout(function()
-					{
-						refresh_bills();
-					}, 5000);
-				}
-			});
-		})();
-
-        $scope.all_bills = function() {
-			$location.path('/admin/all_bills');
+		
+		//"Merchants" link
+		$scope.goto_merchants = function() {
+			$location.path('/merchants');
 		}
 
+		//"Bills" link
+        $scope.goto_bills = function() {
+			$location.path('/bills');
+		}
+
+		//"Logout" link
 		$scope.logout = function() {
 			localStorage.clear();
-			$location.path('/login');
+			console.log("User logged out.");
+			$location.path('/');			
 		}
     }]);

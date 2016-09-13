@@ -30,8 +30,14 @@ def log_in(input):
             #create JWT token, valid for 1 week
             exp = datetime.utcnow() + timedelta(seconds=10)
             response['name'] = results[0]["first_name"]
-            response['token'] = jwt.encode({'user_name': user_name, 'exp': exp}, 'razza', algorithm='HS256')
+            
+            if is_admin(connection, user_name):
+                response['token'] = jwt.encode({'user_name': user_name, 'role': 'admin', 'exp': exp}, 'razza', algorithm='HS256')
+                response['admin']=1;
+            else:
+                response['token'] = jwt.encode({'user_name': user_name, 'exp': exp}, 'razza', algorithm='HS256')
+
             response['success']=1
             
-    billeasy_dbclose(connection)        
+    billeasy_dbclose(connection)
     return json.dumps(response)

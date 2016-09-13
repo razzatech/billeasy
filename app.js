@@ -4,15 +4,23 @@
 angular.module('Authentication', []);
 angular.module('SignUp', []);
 angular.module('Home', []);
-angular.module('Admin', []);
+angular.module('History', []);
 angular.module('Enrollment', []);
+angular.module('Admin', []);
+angular.module('Merchants', []);
+angular.module('NewMerchant', []);
+angular.module('Bills', []);
 
 angular.module('BasicHttpAuthExample', [
     'Authentication',
     'SignUp',
     'Home',
+	'History',
+	'Enrollment',
     'Admin',
-    'Enrollment',
+	'Merchants',
+	'NewMerchant',
+	'Bills',
     'ngRoute',
     'ngCookies'
 ])
@@ -22,19 +30,22 @@ angular.module('BasicHttpAuthExample', [
     $routeProvider
         .when('/login', {
             controller: 'LoginController',
-            templateUrl: '/modules/login/login.html',
-            hideMenus: true
+            templateUrl: '/modules/login/login.html'
         })
 
 		.when('/signup', {
             controller: 'SignUpController',
-            templateUrl: '/modules/signup/signup.html',
-            hideMenus: true
+            templateUrl: '/modules/signup/signup.html'
         })
 
 		.when('/home', {
             controller: 'HomeController',
             templateUrl: '/modules/home/home.html'
+        })
+		
+		.when('/history', {
+            controller: 'HistoryController',
+            templateUrl: '/modules/history/history.html'
         })
 
         .when('/enrollment', {
@@ -46,12 +57,27 @@ angular.module('BasicHttpAuthExample', [
             controller: 'AdminController',
             templateUrl: '/modules/admin/admin.html'
         })
-
-        .when('/admin/all_bills', {
-            controller: 'AdminController',
-            templateUrl: '/modules/admin/all_bills.html'
+		
+		.when('/merchants', {
+            controller: 'MerchantsController',
+            templateUrl: '/modules/merchants/merchants.html'
         })
-
+		
+		.when('/new_merchant', {
+            controller: 'NewMerchantController',
+            templateUrl: '/modules/new_merchant/new_merchant.html'
+        })
+		
+        .when('/bills', {
+            controller: 'BillsController',
+            templateUrl: '/modules/bills/bills.html'
+        })
+		
+		.when('/bills_csv_uploaded', {
+            controller: 'BillsController',
+            templateUrl: '/modules/bills/bills.html'
+        })
+		
         .otherwise({ redirectTo: '/login' });
 }])
 
@@ -60,13 +86,45 @@ angular.module('BasicHttpAuthExample', [
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
 
 
-            if($location.path() === '/admin/all_bills')
+            if($location.path() === '/merchants')
+            {
+
+            }
+			else if($location.path() === '/bills')
+            {
+
+            }
+			else if($location.path() === '/bills_csv_uploaded')
+            {
+				alert("CSV file uploaded.");
+				$location.path('/bills');
+            }
+			else if($location.path() === '/new_merchant')
+            {
+
+            }
+			else if($location.path() === '/history')
             {
 
             }
             else if($location.path() === '/enrollment')
             {
-
+				
+            }
+			else if($location.path() === '/password_reset')
+            {
+				alert("Your password has been reset.");
+            }
+			else if($location.path() === '/signup')
+            {
+				console.log("loading captcha...");
+				setTimeout(function()
+				{
+					grecaptcha.render("recaptcha", {
+						sitekey: '6Lfp5SkTAAAAALxSLN1git8Bhsmz0iStm8kw1pb_',
+					});
+					console.log("captcha ready.")
+				}, 500);
             }
             else if (localStorage.getItem("token")!=null) {
 				if(localStorage.getItem("admin")) {

@@ -5,6 +5,8 @@ angular.module('Authentication')
 .controller('LoginController',
     ['$scope', '$rootScope', '$location', 'AuthenticationService',
     function ($scope, $rootScope, $location, AuthenticationService) {
+		$scope.show_forgot_password = false;
+		
         $scope.login = function () {
             $scope.dataLoading = true;
 
@@ -25,7 +27,16 @@ angular.module('Authentication')
                 } else {
                     $scope.error = response.message;
                     $scope.dataLoading = false;
+					$scope.show_forgot_password=true;
                 }
             });
         };
+		
+		$scope.forgot = function () {
+			AuthenticationService.forgot_password($scope.user_name_or_email, function(response) {
+				alert("A password reset link has been sent to your email address.");
+            });
+            
+			$location.path('/');
+		}
     }]);

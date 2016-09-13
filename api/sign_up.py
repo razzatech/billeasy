@@ -2,6 +2,8 @@ import json
 import collections
 from datetime import datetime, timedelta
 import sys
+import urllib
+import urllib2
 
 #non-installed module imports
 sys.path.append('modules')
@@ -21,7 +23,8 @@ def sign_up(input):
     and "contact_number" in input
     and "email" in input
     and "user_name" in input
-    and "password" in input):
+    and "password" in input
+    and "captcha_response" in input):
         given_name=input["given_name"];
         middle_name=input["middle_name"];
         surname=input["surname"];
@@ -30,14 +33,23 @@ def sign_up(input):
         email=input["email"];
         user_name=input["user_name"];
         password=input["password"];
-
+		
+        #verify captcha
+        url = 'https://www.google.com/recaptcha/api/siteverify'
+        data = urllib.urlencode({'secret' : '6Lfp5SkTAAAAAOG6j8xf1WFDRoGBF4YSNdio5gig', 'response' : input["captcha_response"]})
+        content = urllib2.urlopen(url=url, data=data).read()
+        captcha_fail = not json.loads(content)["success"]
+		
         #connect to database
         connection=billeasy_dbconnect()
-
+	
         #check database for email match
         #results=billeasy_dbquery(connection, "SELECT user_name FROM users WHERE email=%s", (email))
 
-        if email_already_registered(connection,email):
+        if captcha_fail:
+            response['message']= "captcha failed"
+            response['success']=0
+        elif email_already_registered(connection,email):
             response['message']= "email already registered"
             response['success']=0
         elif user_name_taken(connection, user_name):

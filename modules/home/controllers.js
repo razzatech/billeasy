@@ -6,8 +6,7 @@ angular.module('Home')
     ['$scope', '$location', 'HomeService',
     function ($scope, $location, HomeService) {
 		$scope.name=localStorage.getItem("name");
-		$scope.bills=[];
-		$scope.bills_to_be_paid=[];
+		$scope.accounts=[];
 
 		//renew token every 5 seconds
 		(function renew_token()
@@ -34,8 +33,24 @@ angular.module('Home')
 			});
 		})();
 
+		(function refresh_accounts()
+		{
+			HomeService.fetch_accounts(function(response) {
+    			if($location.path()=='/home')
+    			{
+    				$scope.accounts=response.accounts;
+    				console.log("Accounts refreshed.");
+					
+					setTimeout(function()
+					{
+						refresh_accounts();
+					}, 10000);
+    			}
+    		});
+		})();
+		
 		//refresh bills every 5 seconds
-		(function refresh_bills()
+		/* (function refresh_bills()
 		{
 			HomeService.fetch_bills(function(response) {
 				if(response.success && $location.path()=='/home')
@@ -70,10 +85,10 @@ angular.module('Home')
 					}, 5000);
 				}
 			});
-		})();
+		})(); */
 
 		//add up total amount of bills checked (to be paid)
-		$scope.total = function() {
+		/* $scope.total = function() {
 			if($scope.bills!=null) {
 				var t=0;
 
@@ -87,9 +102,9 @@ angular.module('Home')
 				//2 decimal places
 				return t.toFixed(2);
 			}
-		}
+		} */
 
-		$scope.pay = function() {
+		/* $scope.pay = function() {
 			if($scope.total()==0)
 			{
 				alert("Please check the bills you want to pay.");
@@ -109,9 +124,13 @@ angular.module('Home')
 				alert(message.substring(0,message.length-1));
 				$scope.bills_to_be_paid=[];
 			}
+		} */
+		
+		$scope.goto_history = function() {
+			$location.path('/history');
 		}
-
-        $scope.enroll = function() {
+		
+        $scope.goto_enrollment = function() {
 			$location.path('/enrollment');
 		}
 

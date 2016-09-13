@@ -3,35 +3,56 @@
 
   <head>
     <meta charset="utf-8" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
   </head>
 
   <body>
 
     <div class="jumbotron">
-      <div class="container">
-        <div class="col-xs-offset-2 col-xs-8">
-          <div ng-view></div>
-        </div>
-      </div>
+		<div class="container">
+			<div class="col-xs-offset-1 col-xs-10">
+				<div ng-view></div>
+			</div>
+		</div>
     </div>
 
     <script src="//code.angularjs.org/1.2.20/angular.js"></script>
     <script src="//code.angularjs.org/1.2.20/angular-route.js"></script>
     <script src="//code.angularjs.org/1.2.13/angular-cookies.js"></script>
+	
+	<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 
     <script src="/app.js"></script>
+	
     <script src="/modules/login/controllers.js"></script>
     <script src="/modules/login/services.js"></script>
+	
     <script src="/modules/signup/controllers.js"></script>
     <script src="/modules/signup/services.js"></script>
+	
     <script src="/modules/home/controllers.js"></script>
     <script src="/modules/home/services.js"></script>
-    <script src="/modules/admin/controllers.js"></script>
+    
+	<script src="/modules/admin/controllers.js"></script>
     <script src="/modules/admin/services.js"></script>
+  
+	<script src="/modules/merchants/controllers.js"></script>
+    <script src="/modules/merchants/services.js"></script>
+	
+	<script src="/modules/new_merchant/controllers.js"></script>
+    <script src="/modules/new_merchant/services.js"></script>
+	
+	<script src="/modules/bills/controllers.js"></script>
+    <script src="/modules/bills/services.js"></script>
+	
+	<script src="/modules/history/controllers.js"></script>
+    <script src="/modules/history/services.js"></script>
+	
     <script src="/modules/enrollment/controllers.js"></script>
     <script src="/modules/enrollment/services.js"></script>
+
   </body>
+  
 
 </html>

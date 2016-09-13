@@ -9,15 +9,15 @@ angular.module('Home')
 
 		service.renew_token = function (callback) {
 
-			$http.get('http://billeasy.razzatech.com/api/_.py/renew_token?token='+localStorage.getItem("token"))
+			$http.get('http://billeasy.razzatech.com/api/handler.py/renew_token?token='+localStorage.getItem("token"))
 			.success(function (response) {
                 callback(response);
 			});
         };
 
-        service.fetch_bills = function (callback) {
+		service.fetch_accounts = function (callback) {
 
-			$http.get('http://billeasy.razzatech.com/api/_.py/fetch_bills?token='+localStorage.getItem("token"))
+			$http.get('http://billeasy.razzatech.com/api/handler.py/fetch_billing_accounts?token='+localStorage.getItem("token"))
 			.success(function (response) {
                 callback(response);
 			});

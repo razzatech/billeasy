@@ -7,9 +7,10 @@ angular.module('SignUp')
     function ($http, $cookieStore, $rootScope, $timeout) {
         var service = {};
 
-        service.SignUp = function (given_name, middle_name, surname, address, contact_number, email, user_name, password, callback) {
+        service.SignUp = function (captcha_response, given_name, middle_name, surname, address, contact_number, email, user_name, password, callback) {
 
             var POST_data = {
+				captcha_response:captcha_response,
                 given_name:given_name,
                 middle_name:middle_name,
                 surname:surname,
@@ -20,7 +21,7 @@ angular.module('SignUp')
                 password:password
             }
 
-            $http.post('http://billeasy.razzatech.com/api/_.py/sign_up', POST_data, {headers : {'Content-Type': 'x-www-form-urlencoded'}})
+            $http.post('http://billeasy.razzatech.com/api/handler.py/sign_up', POST_data, {headers : {'Content-Type': 'x-www-form-urlencoded'}})
             .success(function (response) {
                     callback(response);
             });
